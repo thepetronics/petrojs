@@ -7,72 +7,72 @@
 </head>
 <body>
 <input type="text" id="prop" value="Hello Folks!" />
-<input type="button" value="Hide" onclick="hide()" />
-<input type="button" value="Show" onclick="show()" />
-<input type="button" value="FadeIn" onclick="fadein()" />
-<input type="button" value="FadeOut" onclick="fadeout()" />
-<input type="button" value="Toggle" onclick="toggle()" />
-<input type="button" value="Change Text" onclick="changetext()" />
-<input type="button" value="Change Size" onclick="changesize()" />
-<input type="button" value="Original Size" onclick="originalsize()" />
-<input type="button" value="Change Background Color" onclick="changebgcolor()" />
+<input type="button" value="Hide" id="hide" />
+<input type="button" value="Show" id="show" />
+<input type="button" value="FadeIn" id="fadeIn" />
+<input type="button" value="FadeOut" id="fadeOut" />
+<input type="button" value="Toggle" id="toggle" />
+<input type="button" value="Change Text" id="changetext" />
+<input type="button" value="Change Size" id="changesize" />
+<input type="button" value="Original Size" id="originalsize" />
+<input type="button" value="Change Background Color" id="bgcolor" />
 <input type="button" value="OnClick" id="onclick" />
-<input type="button" value="XMLHTTPGETRequest" onclick="get()" />
-<input type="button" value="XMLHTTPGETRequestInnerHtml" onclick="getinnerhtml()" />
-<input type="button" value="XMLHTTPGETRequestValue" onclick="getvalue()" />
-<input type="button" value="XMLHTTPPOSTRequest" onclick="post()" />
-<input type="button" value="XMLHTTPPOSTRequestInnerHtml" onclick="postinnerhtml()" />
-<input type="button" value="XMLHTTPPOSTRequestValue" onclick="postvalue()" />
+<input type="button" value="XMLHTTPGETRequest" id="GET" />
+<input type="button" value="XMLHTTPGETRequestInnerHtml" id="getinnerhtml" />
+<input type="button" value="XMLHTTPGETRequestValue" id="getvalue" />
+<input type="button" value="XMLHTTPPOSTRequest" id="POST" />
+<input type="button" value="XMLHTTPPOSTRequestInnerHtml" id="postinnerhtml" />
+<input type="button" value="XMLHTTPPOSTRequestValue" id="postvalue" />
 
 <div id="use">
 </div>
 
 <script type="text/javascript">
-function hide() {
+$petrojs('#hide').click(function() {
 $petrojs('#prop').hide();
-}
-function show() {
+});
+$petrojs('#show').click(function() {
 $petrojs('#prop').show();
-}
-function fadein() {
+});
+$petrojs('#fadeIn').click(function() {
 $petrojs('#prop').fadeIn(100);
-}
-function fadeout() {
+});
+$petrojs('#fadeOut').click(function() {
 $petrojs('#prop').fadeOut(100);
-}
-function toggle() {
+});
+$petrojs('#toggle').click(function() {
 $petrojs('#prop').toggle();
-}
-function changebgcolor() {
+});
+$petrojs('#bgcolor').click(function() {
 $petrojs('#prop').bgcolor('#777');
-}
-function changetext() {
+});
+$petrojs('#changetext').click(function() {
 $petrojs('#prop').value('Its Changed');
-}
-function changesize() {
+});
+$petrojs('#changesize').click(function() {
 $petrojs('#prop').size('250','300');
-}
-function originalsize() {
+});
+$petrojs('#originalsize').click(function() {
 $petrojs('#prop').size('15','166');
-}
-function get() {
+});
+$petrojs('#GET').click(function() {
 petrojs.GET('../load/get.php','alert');
-}
-function getinnerhtml() {
+});
+$petrojs('#getinnerhtml').click(function() {
 petrojs.GET('../load/get.php','innerhtml','use');
-}
-function getvalue() {
+});
+$petrojs('#getvalue').click(function() {
 petrojs.GET('../load/get.php','value','prop');
-}
-function post() {
+});
+$petrojs('#POST').click(function() {
 petrojs.POST('data=Your Posted Value','../load/post.php','alert');
-}
-function postinnerhtml() {
+});
+$petrojs('#postinnerhtml').click(function() {
 petrojs.POST('data=Your Posted Value','../load/post.php','innerhtml','use');
-}
-function postvalue() {
+});
+$petrojs('#postvalue').click(function() {
 petrojs.POST('data=Your Posted Value','../load/post.php','value','prop');
-}
+});
 $petrojs('#onclick').click(function() {
 		alert('its clicked');
 });
