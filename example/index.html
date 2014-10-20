@@ -29,6 +29,8 @@
 <input type="button" value="Fade Toggle" id="fadetoggle" />
 <input type="button" value="Slide Up" id="slideup" />
 <input type="button" value="Slide Down" id="slidedown" />
+<input type="button" value="Add Class" id="addclass" />
+<input type="button" value="Remove Class" id="removeclass" />
 
 <div id="use" class="use">
 </div>
@@ -68,6 +70,11 @@ array with Splice:
 <div id="splice">
 </div>
 </div>
+<div class="array">
+array with Sort:
+<div id="sort">
+</div>
+</div>
 
 <p>Toggle With Fade</p>
 
@@ -80,11 +87,18 @@ asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdas
 asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd
 </div>
 
+<input type="button" value="Scroll Top" id="scrolltop" />
 <script type="text/javascript">
-$petrojs('head').LoadFile("../test.css", "css");
-$petrojs('head').LoadFile("../test.js", "js");
+$petrojs('head').LoadFile({
+	filename:'../test.css',
+	filetype:'css'
+});
+$petrojs('head').LoadFile({
+	filename:'../test.js',
+	filetype:'js'
+});
 
-var css = ".css{ background:#700; width:200px; } " +
+var css = ".css{ background:#700; width:220px; } " +
 		  "#css{ font-family:'Courier New', Courier, monospace; color:#FFF; }" +
 		  "#toggledone{ color:green; }" +
 		  "#tgl{ font-family:'Courier New', Courier, monospace; color:green; }" +
@@ -92,15 +106,36 @@ var css = ".css{ background:#700; width:200px; } " +
 
 $petrojs('head').StyleSheet(css);
 
-$petrojs('#sim').makeArray(["TOYOTA", "HONDA", "BMW"]);
+$petrojs('#sim').makeArray({
+		array:["TOYOTA", "HONDA", "BMW"],
+});
 
-$petrojs('#pos').makeArray(["MERCEDES", "SUZUKI", "BMW"], 1);
+$petrojs('#pos').makeArray({
+		array:["MERCEDES", "SUZUKI", "BMW"],
+		position:1	
+});
 
-$petrojs('#reverse').makeArray(["MERCEDES", "SUZUKI", "BMW"], 'reverse');
+$petrojs('#reverse').makeArray({
+		array:["MERCEDES", "SUZUKI", "BMW"],
+		type:'reverse'
+});
 
-$petrojs('#join').makeArray(["MERCEDES", "SUZUKI", "BMW"], 'join');
+$petrojs('#join').makeArray({
+		array:["MERCEDES", "SUZUKI", "BMW"],
+		type:'join'
+});
 
-$petrojs('#splice').makeArray(["MERCEDES", "SUZUKI", "BMW"], 'splice', 0 , 2);
+$petrojs('#sort').makeArray({
+		array:["MERCEDES", "SUZUKI", "BMW"],
+		type:'sort'
+});
+
+$petrojs('#splice').makeArray({
+		array:["MERCEDES", "SUZUKI", "BMW"],
+		type:'splice',
+		splicefrom:0,
+		spliceto:2
+});
 
 $petrojs('#hide').click(function() {
 $petrojs('#prop').hide();
@@ -109,10 +144,10 @@ $petrojs('#show').click(function() {
 $petrojs('#prop').show();
 });
 $petrojs('#fadeIn').click(function() {
-$petrojs('#prop').fadeIn(100);
+    $petrojs('#prop').fadeIn(2000);
 });
 $petrojs('#fadeOut').click(function() {
-$petrojs('#prop').fadeOut(100);
+    $petrojs('#prop').fadeOut(2000);
 });
 $petrojs('#toggle').click(function() {
 $petrojs('#prop').toggle();
@@ -121,6 +156,9 @@ $petrojs('#fadetoggle').click(function() {
 $petrojs('p').fadeToggle(100, function() {
 	$petrojs('#toggledone').append('div','<div>Finished</div>');
 	});
+});
+$petrojs('#scrolltop').click(function() {
+	$petrojs('head').scrollToTop(200);
 });
 $petrojs('#bgcolor').click(function() {
 $petrojs('#prop').bgcolor('#777');
@@ -138,28 +176,74 @@ $petrojs('#originalsize').click(function() {
 $petrojs('#prop').size('15','166');
 });
 $petrojs('#GET').click(function() {
-petrojs.GET('../load/get.php','alert');
+petrojs.GET('../load/get.php', function(data){
+		if(data=='Return Value'){
+			alert('Done')
+		}else{
+			alert('not Done')
+		}
+	});
 });
 $petrojs('#getinnerhtml').click(function() {
-petrojs.GET('../load/get.php',"#use");
+petrojs.GET('../load/get.php', function(data){
+		if(data=='Return Value'){
+			$petrojs('#use').html(data);
+			alert('Done')
+		}else{
+			alert('not Done')
+		}
+	});
 });
 $petrojs('#getvalue').click(function() {
-petrojs.GET('../load/get.php','#prop');
+petrojs.GET('../load/get.php', function(data){
+		if(data=='Return Value'){
+			$petrojs('#prop').value(data);
+			alert('Done')
+		}else{
+			alert('not Done')
+		}
+	});
 });
 $petrojs('#POST').click(function() {
-petrojs.POST('data=Your Posted Value','../load/post.php','alert');
+petrojs.POST('../load/post.php',{
+	data:"data=Your Posted Value"
+	}, function(data){
+		if(data=='Your Posted Value'){
+			alert(data);
+		}else{
+			alert('not done');
+		}
+	});
 });
 $petrojs('#postinnerhtml').click(function() {
-petrojs.POST('data=Your Posted Value','../load/post.php','#use');
+petrojs.POST('../load/post.php',{
+	data:"data=Your Posted Value",
+	}, function(data){
+		if(data=='Your Posted Value'){
+			$petrojs('#use').html(data);
+			alert('Done');
+		}else{
+			alert('not done');
+		}
+	});
 });
 $petrojs('#postvalue').click(function() {
-petrojs.POST('data=Your Posted Value','../load/post.php','#prop');
+petrojs.POST('../load/post.php',{
+	data:"data=Your Posted Value",
+	}, function(data){
+		if(data=='Your Posted Value'){
+			$petrojs('#prop').value(data);
+			alert('Done');
+		}else{
+			alert('not done');
+		}
+	});
 });
 $petrojs('#onclick').click(function() {
 		alert('its clicked');
 });
 $petrojs('#mouse').mouseOver(function() {
-		$petrojs('#mouse').fontColor('green').fontStyle('italic').fadeIn(100);
+		$petrojs('#mouse').fontColor('green').fontStyle('italic').fadeIn(1000);
 });
 $petrojs('#mouse').mouseOut(function() {
 		$petrojs('#mouse').fontColor('black').fontStyle('normal');
@@ -170,6 +254,14 @@ $petrojs('#event').addPetroListener('click', function() {
 });
 $petrojs('#append').click(function() {
 	$petrojs('#myappend').append('div','<div class="array">Water</div>');
+});
+
+$petrojs('#addclass').click(function() {
+	$petrojs('#tgl').addClass('css');
+});
+
+$petrojs('#removeclass').click(function() {
+	$petrojs('#tgl').removeClass('css');
 });
 
 $petrojs('#slideup').click(function() {
