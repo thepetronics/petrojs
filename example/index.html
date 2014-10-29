@@ -55,6 +55,8 @@
 <input type="button" value="Slide Toggle" id="slidetoggle" />
 <input type="button" value="Add Class" id="addclass" />
 <input type="button" value="Remove Class" id="removeclass" />
+<input type="button" value="Toggle Class" id="toggleclass" />
+<input type="button" value="Has Class" id="hasclass" />
 <input type="button" value="Load" id="ld" />
 <p>Username:petrojs, Password:123</p>
 <form action="" method="post" id="login_form">
@@ -63,6 +65,14 @@
 <input type="button" value="Login" id="send" /><br />
 <span id="msgbox"></span>
 </form>
+<h3>Create Cache</h3>
+<input type="text" id="firstname" name="firstname" />
+<input type="text" id="lastname" name="lastname" />
+<input type="button" value="Save" id="save" />
+<input type="button" value="Clear Cache" id="clearcache" />
+<div id="cache">
+
+</div>
 
 <div id="use" class="use">
 </div>
@@ -111,7 +121,7 @@ array with Sort:
 
 </div>
 
-<p>Toggle With Fade</p>
+<p id="tf">Toggle With Fade</p>
 
 <div id="toggledone">
 </div>
@@ -125,19 +135,37 @@ asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdas
 <div id="hover">
 HOVER ME
 </div>
-
 <input type="button" value="Scroll Top" id="scrolltop" />
 <script type="text/javascript">
-$petrojs('head').LoadFile({
-	name:'../test.css',
-	type:'css',
-	loader:'default' //minified or cached
+/*$petrojs('head').LoadStylesheet('../test.css',function(){
+	//perform Call Back
+}, 2000);
+$petrojs('head').LoadJavascript('../test.js',function(){
+	//perform Call Back
+}, 2000);*/
+
+$petrojs('head').LoadCss({
+	load:['../test.css','../1.css'],
+	timeout:2000,
+	complete:function(){
+		//alert('Loaded');
+	}
 });
-$petrojs('head').LoadFile({
-	name:'../test.js',
-	type:'js',
-	loader:'default' //minified or cached
+
+$petrojs('head').LoadJs({
+	load:['../test.js','../1.js'],
+	timeout:2000,
+	complete:function(){
+		//alert('Loaded');
+	}
 });
+
+/*$petrojs('head').LoadFiles({
+	load:['../test.css','../test.js'],
+	complete:function(){
+		//perform complete action
+	}
+});*/
 
 var css = ".css{ background:#700; width:220px; } " +
 		  "#css{ font-family:'Courier New', Courier, monospace; color:#FFF; }" +
@@ -194,7 +222,7 @@ $petrojs('#toggle').click(function() {
 $petrojs('#prop').toggle();
 });
 $petrojs('#fadetoggle').click(function() {
-$petrojs('p').fadeToggle(100, function() {
+$petrojs('#tf').fadeToggle(100, function() {
 	$petrojs('#toggledone').append('div','<div>Finished</div>');
 	});
 });
@@ -290,7 +318,7 @@ $petrojs('#mouse').mouseOut(function() {
 		$petrojs('#mouse').fontColor('black').fontStyle('normal');
 });
 
-$petrojs('#event').addPetroListener('click', function() {
+$petrojs('#event').onpet('click', function() {
 		alert('PetroJSEvents');
 });
 $petrojs('#append').click(function() {
@@ -305,15 +333,31 @@ $petrojs('head').css('#hover',{
 });
 
 $petrojs('#addclass').click(function() {
-	$petrojs('#tgl').addClass('css');
+	$petrojs('#tgl').addClass('css', function(){
+		alert('class Added');
+	});
 });
 
 $petrojs('#removeclass').click(function() {
-	$petrojs('#tgl').removeClass('css');
+	$petrojs('#tgl').removeClass('css', function(){
+		alert('class Removed');
+	});
 });
 
+$petrojs('#toggleclass').click(function(){
+	$petrojs('#tgl').toggleClass('css', function(){
+		alert('class Toggle');
+	});
+})
+
 //hasClass
-//alert($petrojs("#mouse").hasClass("mouse"));
+$petrojs('#hasclass').click(function(){
+	$petrojs("#mouse").hasClass("mouse",function(){
+		alert('Yes he has class');
+	},function(){
+		alert('No he has no class');
+	});
+})
 
 $petrojs('#slideup').click(function() {
 	$petrojs('#tgl').slideUp(20);
@@ -356,6 +400,28 @@ $petrojs('#send').click(function() {
 	});
 	});
 });
+
+$petrojs('#save').click(function() {
+	var firstname = $petrojs('#firstname').getval();
+	var lastname = $petrojs('#lastname').getval();
+	petrojs.Cache({FirstName:firstname, MiddleName:'YES', LastName:lastname} ,'key',function(obj){
+		$petrojs('#cache').html('FirstName:' +obj.FirstName+' MiddleName:'+obj.MiddleName+' LastName:' +obj.LastName);
+	});
+})
+
+//onload
+petrojs.onload(function(){
+	petrojs.showCachedata(function(obj){
+		$petrojs('#cache').html('FirstName:' +obj.FirstName+' MiddleName:'+obj.MiddleName+' LastName:' +obj.LastName);
+	});
+},window.petrojs);
+
+$petrojs('#clearcache').click(function(){
+	petrojs.clearCachedata(function(){
+		$petrojs('#cache').html('Cache Cleared');
+	});
+})
+
 </script>
 </body>
 </html>
