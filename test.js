@@ -1,1 +1,1 @@
-$petrojs('#use').innerHTML('Js File Loaded');
+$petrojs('#use').html('Js File Loaded');
