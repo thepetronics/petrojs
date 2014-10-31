@@ -3,7 +3,7 @@ petrojs
 
 A JavascriptFramework
 
-Simply include Script and Follow Use the Framework
+Simply include Script and Use a Framework
 
 To Download Project and see examples or api documentation goto Website http://petrojs.thepetronics.com/
 
