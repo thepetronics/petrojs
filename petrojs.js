@@ -2389,7 +2389,7 @@
 
 
 
-        addClass: function(classname, callback) {
+        addClass: function(classname) {
 
 
 
@@ -2445,10 +2445,6 @@
 
 
 
-                    callback();
-
-
-
                 }
 
 
@@ -2461,7 +2457,7 @@
 
 
 
-        removeClass: function(classname, callback) {
+        removeClass: function(classname) {
 
 
 
@@ -2492,11 +2488,6 @@
                     this[i].className = cn;
 
 
-
-                    callback();
-
-
-
                 }
 
 
@@ -2509,7 +2500,7 @@
 
 
 
-        toggleClass: function(className, callback) {
+        toggleClass: function(className) {
 
 
 
@@ -2560,10 +2551,6 @@
 
 
                 this[i].className = classString;
-
-
-
-                callback();
 
 
 
